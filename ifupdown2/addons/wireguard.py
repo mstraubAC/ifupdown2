@@ -126,8 +126,8 @@ class wireguard(Addon, moduleBase):
     def _get_wg_config_running(self, ifaceobj):
         ifname = ifaceobj.name
         rawTerminal = utils.exec_command("wg showconf %s" % (ifname, ))
-        config = configparser.ConfigParser().encode('utf-8')
-        config.read(rawTerminal)
+        config = configparser.ConfigParser()
+        config.read_string(rawTerminal)
         return config
 
     def _is_wg_config_equal(self, ifacename, this, other):
@@ -166,8 +166,9 @@ class wireguard(Addon, moduleBase):
         attr = "wireguard-config-path"
         attr_value = ifaceobj.get_attr_value_first(attr)
         wg_running_config_is_match = self._is_wg_config_equal(ifname, self._get_wg_config_on_disk(ifaceobj), self._get_wg_config_running(ifaceobj))
-        self._query_check_n_update(ifaceobjcurr, attr, attr_value, attr_value if wg_running_config_is_match else "MISMATCH")
-        self.logger.info("wireguard[%s]: attr=%s, value=%s" % (ifname, attr, attr_value))
+        is_attr_value = attr_value if wg_running_config_is_match else "MISMATCH"
+        self._query_check_n_update(ifaceobjcurr, attr, attr_value, is_attr_value)
+        self.logger.info("wireguard[%s]: attr=%s, value=%s, is_value=" % (ifname, attr, attr_value, is_attr_value))
 
         on_disk_wg_config_hash = self._get_wg_config_on_disk(ifaceobj)
         self.logger.info("wireguard[%s]: on_disk_wg_config_hash=" % (ifname, on_disk_wg_config_hash))
