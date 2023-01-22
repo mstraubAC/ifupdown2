@@ -16,3 +16,7 @@ jobs:
           docker-image: debian:bullseye-slim
           host-arch: amd64
           use-debuild: true
+      - name: list GITHUB_WORKSPACE
+        run: ls -l ${GITHUB_WORKSPACE}
+      - name: list GITHUB_WORKSPACE/..
+        run: ls -l ${GITHUB_WORKSPACE}/..
