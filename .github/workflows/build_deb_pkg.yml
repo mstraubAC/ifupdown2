@@ -9,7 +9,7 @@ jobs:
       #   run: make dist
       # - name: copy distribution file to root
       #   run: cp dist/*.tar.gz ${GITHUB_WORKSPACE}/.. && rm -fR dist/
-      - uses: mstraubAC/build-deb-action@feature/debuild
+      - uses: mstraubAC/build-deb-action@v1.3.0
         env:
           DEB_BUILD_OPTIONS: noautodbgsym
         with:
