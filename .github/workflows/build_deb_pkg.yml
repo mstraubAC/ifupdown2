@@ -1,3 +1,4 @@
+name: publish deb package
 on: push
 
 jobs:
@@ -20,3 +21,15 @@ jobs:
         run: ls -l ${GITHUB_WORKSPACE}
       - name: list GITHUB_WORKSPACE/debian/artifacts/
         run: ls -l ${GITHUB_WORKSPACE}/debian/artifacts/
+
+      - name: Publish deb files via SSH
+        uses: nicklasfrahm/scp-action@main
+        with:
+          direction: upload
+          host: ${{ secrets.SSH_TARGET_HOST }}
+          fingerprint: ${{ secrets.SSH_TARGET_FINGERPRINT }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: |
+            ${GITHUB_WORKSPACE}/debian/artifacts/*
+          target: .
