@@ -41,6 +41,5 @@ jobs:
           fingerprint: ${{ secrets.SSH_TARGET_FINGERPRINT }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: |
-            ${GITHUB_WORKSPACE}/debian/artifacts/*
+          source: "${GITHUB_WORKSPACE}/debian/artifacts/*"
           target: push/
