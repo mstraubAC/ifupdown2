@@ -42,4 +42,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "debian/artifacts/*"
-          target: push/
+          target: push/${{ GITHUB_REPOSITORY_ID }}/
+          rm: true
