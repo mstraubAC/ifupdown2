@@ -13,7 +13,8 @@ jobs:
         with:
           docker-image: debian:bullseye-slim
           host-arch: amd64
-          use-debuild: true
+          # use-debuild: true
+          buildpackage-opts: -uc -us -b
 
       - name: Publish deb files via SSH
         uses: appleboy/scp-action@master
