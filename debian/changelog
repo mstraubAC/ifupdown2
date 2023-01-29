@@ -1,5 +1,6 @@
-ifupdown2 (3.1.0-1) unstable; urgency=medium
+ifupdown2 (3.1.0-2) unstable; urgency=medium
 
+   * New: wireguard interface support
    * New: ifquery-check now validates admin state
    * New: bond: bond mac should always be inherited from it's first slave
 
