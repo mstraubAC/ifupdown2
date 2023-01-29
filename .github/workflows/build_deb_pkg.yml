@@ -1,0 +1,27 @@
+name: publish deb package
+on: push
+
+jobs:
+  build-debs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: jtdor/build-deb-action@v1
+        env:
+          DEB_BUILD_OPTIONS: noautodbgsym
+        with:
+          docker-image: debian:bullseye-slim
+          host-arch: amd64
+          buildpackage-opts: -uc -us -b
+
+      - name: Publish deb files via SSH
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_TARGET_HOST }}
+          fingerprint: ${{ secrets.SSH_TARGET_FINGERPRINT }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "debian/artifacts/*"
+          target: push/${{ github.repository_id }}/
+          rm: true
